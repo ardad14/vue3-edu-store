@@ -14,10 +14,10 @@
         </h5>
         <p class="mt-3">
           Stock:
-          <strong class="text-success">{{isAvailable ? "Available" : "Not available"}}</strong>
+          <strong class="text-success">{{isAvailable  ? "Available" : "Not available"}}</strong>
         </p>
-        <button :disabled="!isAvailable" @click="addToCart" :class="`btn ${isAvailable ? 'btn-success' : 'btn-secondary'} w-100 shadow-none`">
-          {{isAvailable ? "Add to cart" : "Added"}}
+        <button :disabled="!isAvailable || isInCart" @click="addToCart" :class="`btn ${isAvailable && !isInCart ? 'btn-success' : 'btn-secondary'} w-100 shadow-none`">
+          {{isAvailable && !isInCart ? "Add to cart" : "Added"}}
         </button>
       </div>
     </div>
@@ -44,11 +44,17 @@ export default {
     },
     isAvailable: {
       type: Boolean
-    }
+    },
+    id: Number
   },
   methods: {
     addToCart() {
       this.$emit('add-to-cart');
+    }
+  },
+  computed: {
+    isInCart() {
+      return this.$root.isInCart(this.id)
     }
   }
 }

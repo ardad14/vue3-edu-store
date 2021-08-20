@@ -8,6 +8,7 @@
           <product
               v-for="(product, index) in products"
               :key="product.id"
+              :id="product.id"
               :name="product.name"
               :category="product.category"
               :price="product.price"
